@@ -166,6 +166,7 @@ namespace Vestigo
         }
         else
         {
+          view.unselect_all();
           menu = new Vestigo.Menu().activate_context_menu();
           menu.popup(null, null, null, event.button, event.time);
         }
