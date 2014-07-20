@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Vestigo
+Comment=Lightweight file manager
+Exec=vestigo %F
+Icon=vestigo
+Terminal=false
+Categories=Application;Utility;
+MimeType=
+StartupNotify=true

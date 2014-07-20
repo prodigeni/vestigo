@@ -1,0 +1,34 @@
+<schemalist>
+  <schema id="org.alphaos.vestigo.preferences" path="/org/alphaos/vestigo/preferences/">
+    <key name="width" type="i">
+      <default>770</default>
+      <summary>Width</summary>
+      <description>Main window width</description>
+    </key>
+    <key name="height" type="i">
+      <default>540</default>
+      <summary>Heigth</summary>
+      <description>Main window heigth</description>
+    </key>
+    <key name="icon-size" type="i">
+      <default>48</default>
+      <summary>Icon size</summary>
+      <description>Icon size</description>
+    </key>
+    <key name="thumbnail-size" type="i">
+      <default>64</default>
+      <summary>Thumbnail size</summary>
+      <description>Thumbnail size</description>
+    </key>
+    <key name="saved-dir" type="s">
+      <default>''</default>
+      <summary>Saved directory from previous session</summary>
+      <description>Saved directory from previous session</description>
+    </key>
+    <key name="terminal" type="s">
+      <default>'taeni -d '</default>
+      <summary>Default terminal with command for starting directory</summary>
+      <description>Default terminal with command for starting directory</description>
+    </key> 
+  </schema>
+</schemalist>

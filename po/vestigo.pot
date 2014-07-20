@@ -1,0 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-18 15:32+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/window.vala:22
+msgid "About"
+msgstr ""
+
+#: src/window.vala:49
+msgid "Add to Bookmarks"
+msgstr ""
+
+#: src/operations.vala:30
+msgid "Close"
+msgstr ""
+
+#: src/operations.vala:29
+msgid "Create"
+msgstr ""
+
+#: src/vars.vala:5
+msgid "File manager in Vala and GTK3"
+msgstr ""
+
+#: src/operations.vala:14 src/window.vala:48
+msgid "New directory"
+msgstr ""
+
+#: src/operations.vala:12 src/window.vala:47
+msgid "New file"
+msgstr ""
+
+#: src/window.vala:52
+msgid "Open in Terminal"
+msgstr ""
+
+#: src/window.vala:23
+msgid "Quit"
+msgstr ""
