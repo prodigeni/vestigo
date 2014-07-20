@@ -159,7 +159,6 @@ namespace Vestigo
         path = view.get_path_at_pos((int) event.x, (int) event.y);
         if (path != null)
         {
-          view.unselect_all();
           view.select_path(path);
           menu = new Vestigo.Menu().activate_file_menu();
           menu.popup(null, null, null, event.button, event.time);
