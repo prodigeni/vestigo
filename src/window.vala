@@ -5,7 +5,6 @@ namespace Vestigo
     private const GLib.ActionEntry[] action_entries =
     {
       { "go-prev",       action_go_to_prev_directory },
-      { "go-next",       action_go_to_next_directory },
       { "go-up",         action_go_to_up_directory   },
       { "go-home",       action_go_to_home_directory },
       { "create-file",   action_create_file          },
@@ -27,7 +26,6 @@ namespace Vestigo
       app.set_app_menu(menu);
       
       app.add_accelerator("<Alt>Left",  "app.go-prev", null);
-      app.add_accelerator("<Alt>Right", "app.go-next", null);
       app.add_accelerator("BackSpace",  "app.go-up", null);
       app.add_accelerator("<Alt>Home",  "app.go-home", null);
       app.add_accelerator("F4",         "app.terminal", null);
@@ -87,19 +85,13 @@ namespace Vestigo
       grid.attach(scrolled, 1, 0, 1, 1);
       
       button_prev = new Gtk.Button.from_icon_name("go-previous-symbolic", Gtk.IconSize.MENU);
-      button_next = new Gtk.Button.from_icon_name("go-next-symbolic", Gtk.IconSize.MENU);
+      button_prev.valign = Gtk.Align.CENTER;
       
       button_up = new Gtk.Button.from_icon_name("go-up-symbolic", Gtk.IconSize.MENU);
       button_up.valign = Gtk.Align.CENTER;
 
-      var navigation_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
-      navigation_box.pack_start(button_prev);
-      navigation_box.pack_start(button_next);
-      navigation_box.get_style_context().add_class("linked");
-      navigation_box.valign = Gtk.Align.CENTER;
-      
       headerbar = new Gtk.HeaderBar();
-      headerbar.pack_start(navigation_box);
+      headerbar.pack_start(button_prev);
       headerbar.pack_start(button_up);
       headerbar.pack_end(menubutton);
       headerbar.set_show_close_button(true);
@@ -115,10 +107,11 @@ namespace Vestigo
     private void connect_signals(Gtk.ApplicationWindow appwindow)
     {
       places.open_location.connect(() => { new Vestigo.IconView().open_location(places.get_location(), true); });
+
       view.item_activated.connect(() => { (new Vestigo.IconView().icon_clicked()); });
+      view.button_press_event.connect(context_menu_activate);
       
       button_prev.clicked.connect(action_go_to_prev_directory);
-      button_next.clicked.connect(action_go_to_next_directory);
       button_up.clicked.connect(action_go_to_up_directory);
       
       window.delete_event.connect(() => { new Vestigo.Settings().save_settings(); window.get_application().quit(); return true; });
@@ -157,16 +150,34 @@ namespace Vestigo
       }
     }
 
+    private bool context_menu_activate(Gdk.EventButton event)
+    {
+      Gtk.TreePath? path = null;
+
+      if (event.button == 3)
+      {
+        path = view.get_path_at_pos((int) event.x, (int) event.y);
+        if (path != null)
+        {
+          view.unselect_all();
+          view.select_path(path);
+          menu = new Vestigo.Menu().activate_file_menu();
+          menu.popup(null, null, null, event.button, event.time);
+        }
+        else
+        {
+          menu = new Vestigo.Menu().activate_context_menu();
+          menu.popup(null, null, null, event.button, event.time);
+        }
+      }
+      return false;
+    }
+
     private void action_go_to_prev_directory()
     {
       new Vestigo.IconView().go_to_prev_directory();
     }
 
-    private void action_go_to_next_directory()
-    {
-      new Vestigo.IconView().go_to_next_directory();
-    }
- 
     private void action_go_to_up_directory()
     {
       new Vestigo.IconView().open_location(GLib.File.new_for_path(GLib.Path.get_dirname(current_dir)), true);

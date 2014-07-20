@@ -8,11 +8,11 @@ namespace Vestigo
 
   Gtk.ApplicationWindow window;
   Gtk.Button button_prev;
-  Gtk.Button button_next;
   Gtk.Button button_up;
   Gtk.HeaderBar headerbar;
   Gtk.IconView view;
   Gtk.ListStore model;
+  Gtk.Menu menu;
   Gtk.MenuButton menubutton;
   Gtk.PlacesSidebar places; 
    
@@ -24,5 +24,6 @@ namespace Vestigo
   string terminal;
   
   string current_dir;
+  Gee.ArrayList<string> history;
 }  
   

@@ -15,7 +15,7 @@ namespace Vestigo
     {
       try
       {
-        print("DEBUG: starting FileMonitor in %s\n", current_dir);
+        //print("DEBUG: starting FileMonitor in %s\n", current_dir);
         
         var file = GLib.File.new_for_path(current_dir);
         current_monitor = file.monitor_directory(GLib.FileMonitorFlags.NONE);
@@ -29,7 +29,7 @@ namespace Vestigo
 
     private void on_file_changed(GLib.File src, GLib.File? dest, GLib.FileMonitorEvent event)
     {
-      print("DEBUG: %s changed\n", current_dir);
+      //print("DEBUG: %s changed\n", current_dir);
       new Vestigo.IconView().open_location(GLib.File.new_for_path(current_dir), false);
     }
 

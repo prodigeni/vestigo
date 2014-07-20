@@ -13,7 +13,7 @@ namespace Vestigo
       
       if (thumb_file.query_exists() == true)
       {
-        print("%s\n", "DEBUG: pdf preview found in .thumbnails/large");
+        //print("%s\n", "DEBUG: pdf preview found in .thumbnails/large");
         
         try
         {
@@ -28,7 +28,7 @@ namespace Vestigo
       }
       else
       {
-        print("%s\n", "DEBUG: pdf preview not found");
+        //print("%s\n", "DEBUG: pdf preview not found");
         
         Poppler.Document document = null;
         

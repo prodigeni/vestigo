@@ -4,12 +4,16 @@ namespace Vestigo
   {
     Gtk.TreeIter iter;
     string content;
-    Gee.ArrayList<string> history = new Gee.ArrayList<string>();
 
     public void open_location(GLib.File file, bool start_monitor)
     {
       var list_dir  = new Gee.ArrayList<string>();
       var list_file = new Gee.ArrayList<string>();
+            history = new Gee.ArrayList<string>();      
+
+      string prev_dir = current_dir;
+      if (prev_dir != null)
+        history.add(prev_dir);
 
       string name;
       string fullpath;
@@ -17,11 +21,13 @@ namespace Vestigo
       Gdk.Pixbuf pbuf = null;
       
       history.add(current_dir);
+      
+      stdout.printf("DEBUG: history list\n");
       foreach(string i in history)
       {
         stdout.printf("%s\n", i);
       }
-
+      
       if (current_dir != null && file.query_file_type(0) == GLib.FileType.DIRECTORY)
       {
         try
@@ -162,12 +168,9 @@ namespace Vestigo
     
     public void go_to_prev_directory()
     {
-      
-    }
-    public void go_to_next_directory()
-    {
-      
-    }    
+      string name = history[0];
+      open_location(GLib.File.new_for_path(name), true);
+    }  
     
   }
 }

@@ -15,7 +15,7 @@ namespace Vestigo
         
         if (thumb_file.query_exists() == true)
         {
-          print("%s\n", "DEBUG: image preview found in .thumbnails/normal");
+          //print("%s\n", "DEBUG: image preview found in .thumbnails/normal");
           
           try
           {
@@ -29,7 +29,7 @@ namespace Vestigo
         }
         else
         {
-          print("%s\n", "DEBUG: image preview not found");
+          //print("%s\n", "DEBUG: image preview not found");
           
           var file = GLib.File.new_for_path(name);
 
