@@ -2,14 +2,13 @@ namespace Vestigo
 {
   public class IconView : GLib.Object
   {
-    Gtk.TreeIter iter;
     string content;
 
     public void open_location(GLib.File file, bool start_monitor)
     {
       var list_dir  = new Gee.ArrayList<string>();
       var list_file = new Gee.ArrayList<string>();
-            history = new Gee.ArrayList<string>();      
+            history = new Gee.ArrayList<string>();
 
       string prev_dir = current_dir;
       if (prev_dir != null)
@@ -22,11 +21,11 @@ namespace Vestigo
       
       history.add(current_dir);
       
-      stdout.printf("DEBUG: history list\n");
-      foreach(string i in history)
-      {
-        stdout.printf("%s\n", i);
-      }
+      //stdout.printf("DEBUG: history list\n");
+      //foreach(string i in history)
+      //{
+      //  stdout.printf("%s\n", i);
+      //}
       
       if (current_dir != null && file.query_file_type(0) == GLib.FileType.DIRECTORY)
       {
@@ -106,6 +105,7 @@ namespace Vestigo
           headerbar.set_title("%s - %s".printf(NAME, current_dir));
           list_dir.clear();
           list_file.clear();
+          view.grab_focus();
         }
         catch (GLib.Error e)
         {

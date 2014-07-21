@@ -1,7 +1,7 @@
 namespace Vestigo
 {
   const string NAME        = "Vestigo";
-  const string VERSION     = "0.0.2";
+  const string VERSION     = "0.0.3";
   const string DESCRIPTION = _("File manager in Vala and GTK3");
   const string ICON        = "vestigo";
   const string[] AUTHORS   = { "Simargl <archpup-at-gmail-dot-com>", null };
@@ -15,7 +15,8 @@ namespace Vestigo
   Gtk.Menu menu;
   Gtk.MenuButton menubutton;
   Gtk.PlacesSidebar places; 
-   
+  Gtk.TreeIter iter;
+
   int width;
   int height;
   int icon_size;
@@ -25,5 +26,7 @@ namespace Vestigo
   
   string current_dir;
   Gee.ArrayList<string> history;
+  Gee.ArrayList<string> files_copy;
+  Gee.ArrayList<string> files_cut;
 }  
   

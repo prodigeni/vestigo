@@ -11,10 +11,15 @@ namespace Vestigo
       { "create-folder", action_create_folder        },
       { "add-bookmark",  action_add_bookmark         },
       { "terminal",      action_terminal             },
+      { "cut",           action_cut                  },
+      { "copy",          action_copy                 },
+      { "rename",        action_rename               },
+      { "delete",        action_delete               },
+      { "paste",         action_paste                },
       { "about",         action_about                },
       { "quit",          action_quit                 }
     };   
-    
+
     public void add_app_window(Gtk.Application app)
     {
       app.add_action_entries(action_entries, app);
@@ -29,6 +34,11 @@ namespace Vestigo
       app.add_accelerator("BackSpace",  "app.go-up", null);
       app.add_accelerator("<Alt>Home",  "app.go-home", null);
       app.add_accelerator("F4",         "app.terminal", null);
+      app.add_accelerator("<Control>X", "app.cut", null);
+      app.add_accelerator("<Control>C", "app.copy", null);
+      app.add_accelerator("F2",         "app.rename", null);
+      app.add_accelerator("<Control>V", "app.paste", null);
+      app.add_accelerator("Delete",     "app.delete", null);
       app.add_accelerator("<Control>Q", "app.quit", null);
       
       new Vestigo.Settings().get_settings();
@@ -117,38 +127,6 @@ namespace Vestigo
       window.delete_event.connect(() => { new Vestigo.Settings().save_settings(); window.get_application().quit(); return true; });
     }    
 
-    private void action_create_file()
-    {
-      new Vestigo.Operations().make_new(true);
-    }
-    
-    private void action_create_folder()
-    {
-      new Vestigo.Operations().make_new(false);
-    }
-
-    private void action_add_bookmark()
-    {
-      GLib.FileOutputStream fos = null;
-      string bookmark = GLib.Path.build_filename(GLib.Environment.get_user_config_dir(), "gtk-3.0/bookmarks");
-      try
-      {
-        fos = File.new_for_path(bookmark).append_to(FileCreateFlags.NONE);
-      }
-      catch (GLib.Error e)
-      {
-        stderr.printf ("%s\n", e.message);
-      }
-      string current_uri = GLib.File.new_for_path(current_dir).get_uri() + "\n";
-      try
-      {
-        fos.write(current_uri.data);
-      }
-      catch (GLib.IOError e)
-      {
-        stderr.printf ("%s\n", e.message);
-      }
-    }
 
     private bool context_menu_activate(Gdk.EventButton event)
     {
@@ -173,6 +151,21 @@ namespace Vestigo
       return false;
     }
 
+    private void action_create_file()
+    {
+      new Vestigo.Operations().make_new(true);
+    }
+
+    private void action_create_folder()
+    {
+      new Vestigo.Operations().make_new(false);
+    }
+
+    private void action_add_bookmark()
+    {
+      new Vestigo.Operations().add_bookmark();
+    }
+
     private void action_go_to_prev_directory()
     {
       new Vestigo.IconView().go_to_prev_directory();
@@ -192,6 +185,31 @@ namespace Vestigo
     private void action_terminal()
     {
       new Vestigo.Operations().execute_command_async("%s '%s'".printf(terminal, current_dir));
+    }
+
+    private void action_cut()
+    {
+      new Vestigo.Operations().file_cut_activate();
+    }
+
+    private void action_copy()
+    {
+      new Vestigo.Operations().file_copy_activate();
+    }
+
+    private void action_rename()
+    {
+      new Vestigo.Operations().file_rename_activate();
+    }
+
+    private void action_delete()
+    {
+      new Vestigo.Operations().file_delete_activate();
+    }
+
+    private void action_paste()
+    {
+      new Vestigo.Operations().file_paste_activate();
     }
 
     private void action_about()

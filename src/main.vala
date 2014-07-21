@@ -21,7 +21,7 @@ namespace Vestigo
   {
     public Main()
     {
-      Object(application_id: "org.alphaos.vestigo", flags: ApplicationFlags.FLAGS_NONE);
+      Object(application_id: "org.alphaos.vestigo", flags: GLib.ApplicationFlags.FLAGS_NONE);
     }
 
     public override void startup()
