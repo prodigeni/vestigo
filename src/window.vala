@@ -7,8 +7,8 @@ namespace Vestigo
       { "go-prev",       action_go_to_prev_directory },
       { "go-up",         action_go_to_up_directory   },
       { "go-home",       action_go_to_home_directory },
-      { "create-file",   action_create_file          },
       { "create-folder", action_create_folder        },
+      { "create-file",   action_create_file          },
       { "add-bookmark",  action_add_bookmark         },
       { "terminal",      action_terminal             },
       { "cut",           action_cut                  },
@@ -56,8 +56,8 @@ namespace Vestigo
       var section_one = new GLib.Menu();
       var section_two = new GLib.Menu();
       
-      section_one.append(_("Create file"),      "app.create-file");
       section_one.append(_("Create folder"),    "app.create-folder");
+      section_one.append(_("Create file"),      "app.create-file");
       section_one.append(_("Add to Bookmarks"), "app.add-bookmark");
       gear.append_section(null, section_one);
       
@@ -151,14 +151,14 @@ namespace Vestigo
       return false;
     }
 
-    private void action_create_file()
-    {
-      new Vestigo.Operations().make_new(true);
-    }
-
     private void action_create_folder()
     {
       new Vestigo.Operations().make_new(false);
+    }
+
+    private void action_create_file()
+    {
+      new Vestigo.Operations().make_new(true);
     }
 
     private void action_add_bookmark()
