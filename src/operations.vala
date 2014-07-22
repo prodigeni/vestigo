@@ -21,7 +21,7 @@ namespace Vestigo
       dialog.set_resizable(false);
 
       var entry = new Gtk.Entry();
-      entry.set_size_request(190, 0);
+      entry.set_size_request(250, 0);
       entry.activate.connect(() => { typed = entry.get_text(); on_make_new_dialog_response(entry, dialog, typed, file); });
 
       var content = dialog.get_content_area() as Gtk.Box;
@@ -71,6 +71,76 @@ namespace Vestigo
       catch (GLib.IOError e)
       {
         stderr.printf ("%s\n", e.message);
+      }
+    }
+
+    // Open
+    public void file_open_activate()
+    {
+      GLib.FileInfo file_info = null;
+      var files_open = new Gee.ArrayList<string>();
+      files_open = get_files_selection();
+
+      if (files_open.size == 1)
+      {
+        GLib.File file_check = GLib.File.new_for_path(files_open[0]);
+        if (file_check.query_file_type(0) == GLib.FileType.DIRECTORY)
+        {
+          new Vestigo.IconView().open_location(GLib.File.new_for_path(files_open[0]), true);
+        }
+        else
+        {
+          try
+          {
+            file_info = file_check.query_info("standard::content-type", 0, null);
+          }
+          catch (GLib.Error e)
+          {
+            stderr.printf("%s\n", e.message);
+          }
+
+          string content = file_info.get_content_type();
+          string mime = GLib.ContentType.get_mime_type(content);
+
+          var appinfo = AppInfo.get_default_for_type(mime, false);
+            if (appinfo != null)
+              execute_command_async("%s '%s'".printf(appinfo.get_executable(), files_open[0]));
+        }
+      }
+    }
+
+    // Open With
+    public void file_open_with_activate()
+    {
+      GLib.FileInfo file_info = null;
+      var files_open_with = new Gee.ArrayList<string>();
+      files_open_with = get_files_selection();
+
+      if (files_open_with.size == 1)
+      {
+        GLib.File file_check = GLib.File.new_for_path(files_open_with[0]);
+        if (file_check.query_file_type(0) != GLib.FileType.DIRECTORY)
+        {
+          try
+          {
+            file_info = file_check.query_info("standard::content-type", 0, null);
+          }
+          catch (GLib.Error e)
+          {
+            stderr.printf("%s\n", e.message);
+          }
+          string content = file_info.get_content_type();
+          string mime = GLib.ContentType.get_mime_type(content);
+
+          var dialog = new Gtk.AppChooserDialog.for_content_type(window, 0, mime);
+          if (dialog.run() == Gtk.ResponseType.OK)
+          {
+            var appinfo = dialog.get_app_info();
+            if (appinfo != null)
+              execute_command_async("%s '%s'".printf(appinfo.get_executable(), files_open_with[0]));
+          }
+          dialog.close();
+        }
       }
     }
 
@@ -129,7 +199,7 @@ namespace Vestigo
         dialog.set_resizable(false);
 
         var entry = new Gtk.Entry();
-        entry.set_size_request(190, 0);
+        entry.set_size_request(250, 0);
         entry.set_text(GLib.Path.get_basename(files_rename[0]));
         entry.activate.connect(() => { typed = entry.get_text(); on_rename_dialog_response(entry, dialog, files_rename[0], typed); });
 

@@ -20,13 +20,7 @@ namespace Vestigo
       Gdk.Pixbuf pbuf = null;
       
       history.add(current_dir);
-      
-      //stdout.printf("DEBUG: history list\n");
-      //foreach(string i in history)
-      //{
-      //  stdout.printf("%s\n", i);
-      //}
-      
+
       if (current_dir != null && file.query_file_type(0) == GLib.FileType.DIRECTORY)
       {
         try
